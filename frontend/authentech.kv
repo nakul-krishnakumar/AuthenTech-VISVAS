@@ -1,0 +1,64 @@
+# authentech.kv
+
+MainLayout:
+
+<MainLayout>:
+    orientation: 'vertical'
+
+    size_hint: 0.5, 1
+    pos_hint: {"center_x": 0.5, "top": 1}
+    spacing: 20
+
+    Button:
+        text: "A U T H E N T E C H    V I S V A S"
+        font_size: 25
+        bold: True
+        size_hint: 1, None
+        height: 80
+
+    # Original Image Display
+    Image:
+        id: original_image
+        size_hint: 1, None
+        height: 200
+        source: ''  # Placeholder for image
+        
+    Button:
+        text: "Upload Original Signature"
+        size_hint: 1, None
+        height: 60
+        on_release: root.upload_original_signature()
+
+    # Test Image Display
+    Image:
+        id: test_image
+        size_hint: 1, None
+        height: 200
+        source: ''  # Placeholder for image
+
+    Button:
+        text: "Upload Test Signature"
+        size_hint: 1, None
+        height: 60
+        on_release: root.upload_test_signature()
+
+    # Progress Bar Section
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, None
+        height: 60
+
+        Label:
+            text: "Performing analysis"
+            font_size: 16
+
+        ProgressBar:
+            max: 100
+            value: 0
+            size_hint: 1, None
+            height: 20
+
+    Button:
+        text: "VERIFY SIGNATURE"
+        size_hint: 1, None
+        height: 60
