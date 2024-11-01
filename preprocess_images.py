@@ -3,8 +3,8 @@ from pathlib import Path
 import cv2
 from preprocessing import preprocess
 
-source_folder = "D:\\AuthenTech Viswas Project\\sign_data"
-destination_folder = "D:\\AuthenTech Viswas Project\\sign_data_processed"
+source_folder = "sign_data"
+destination_folder = "sign_data_processed"
 
 Path(destination_folder).mkdir(parents=True, exist_ok=True)
 
@@ -15,14 +15,21 @@ for root, dirs, files in os.walk(source_folder):
         if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image = cv2.imread(file_path)
             if image is not None:
-                processed_image = preprocess(image)
-                
-                relative_path = os.path.relpath(file_path, source_folder)
-                output_path = os.path.join(destination_folder, relative_path)
+                # Apply preprocess function
+                processed_image = preprocess(image, 256, 256)
 
-                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                # Ensure image data type and range are suitable for saving
+                if processed_image.dtype != 'uint8':
+                    processed_image = (processed_image * 255).astype('uint8')
 
-                cv2.imwrite(output_path, processed_image)
-                print(f"Saved processed image to {output_path}")
+                relative_path = Path(os.path.relpath(file_path, source_folder)).as_posix()
+                output_path = Path(destination_folder, relative_path).as_posix()
+                os.makedirs(Path(output_path).parent, exist_ok=True)
+
+                success = cv2.imwrite(output_path, processed_image)
+                if success:
+                    print(f"Saved processed image to {output_path}")
+                else:
+                    print(f"Failed to save image at {output_path}")
 
 print("Preprocessing complete. All preprocessed images are saved in 'sign_data_processed' folder.")
