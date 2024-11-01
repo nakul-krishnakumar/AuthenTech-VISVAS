@@ -16,7 +16,7 @@ for root, dirs, files in os.walk(source_folder):
             image = cv2.imread(file_path)
             if image is not None:
                 # Apply preprocess function
-                processed_image = preprocess(image, 256, 256)
+                processed_image = preprocess(image)
 
                 # Ensure image data type and range are suitable for saving
                 if processed_image.dtype != 'uint8':

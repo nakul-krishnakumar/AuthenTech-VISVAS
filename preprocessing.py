@@ -3,8 +3,8 @@ import cv2
 import numpy as np
 from skimage import exposure
 
-def resize_image(image,height, width):
-    return cv2.resize(image,(height,width))
+def resize_image(image):
+    return cv2.resize(image,(128,128))
 
 def convert_to_bw(image):
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -19,8 +19,8 @@ def enhance_features(image):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return exposure.equalize_adapthist(image)
 
-def preprocess(image,height,width):
-    resized_image = resize_image(image,height,width)
+def preprocess(image):
+    resized_image = resize_image(image)
     bw_image = convert_to_bw(resized_image)
     normalized_image = normalize_image(bw_image)
     enhanced_image = enhance_features(normalized_image)
