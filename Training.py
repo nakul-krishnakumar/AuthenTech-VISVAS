@@ -8,10 +8,10 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 img_size=(128,128)
 print("Creating training dataframe")
-training_dataset = pd.read_csv("sign_data/train_data.csv")
+training_dataset = pd.read_csv("../sign_data/train_data.csv")
 file_1s = training_dataset['file1']
 file_2s = training_dataset['file2']
-image_dir = 'sign_data_processed/train'
+image_dir = '../sign_data_processed/train'
 
 # Creating a list of all first images
 image_1 = []
@@ -44,10 +44,10 @@ print("Training DataFrame created successfully!")
 print("Creating testing DataFrame")
 
 # Process the testing dataset
-testing_dataset = pd.read_csv("sign_data/test_data.csv")
+testing_dataset = pd.read_csv("../sign_data/test_data.csv")
 file_1s = testing_dataset['file1']
 file_2s = testing_dataset['file2']
-image_dir = 'sign_data_processed/test'
+image_dir = '../sign_data_processed/test'
 
 # Creating a list of all first images for testing
 test_image_1 = []
@@ -85,11 +85,13 @@ model = Siamese_CNN_Model.create_Siamese_CNN_model()
 img1 = tf.convert_to_tensor(np.array(image_1), dtype=tf.float32)
 img2 = tf.convert_to_tensor(np.array(image_2), dtype=tf.float32)
 train_labels = tf.convert_to_tensor(labels, dtype=tf.float32)  # Ensure labels are float32
+print(len(image_1))
 
 # Fit the model
 model.fit([img1, img2], 
           train_labels, 
-          batch_size=10, epochs=20)
+          batch_size=10,epochs=20)
+model.save('signature_verification_model.h5')
 
 # Making predictions
 predictions = model.predict([tf.convert_to_tensor(np.array(test_image_1), dtype=tf.float32), 
