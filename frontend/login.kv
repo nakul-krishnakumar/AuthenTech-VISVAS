@@ -1,0 +1,91 @@
+MDScreen:
+    Image:
+        source: 'loginpage2.jpg'
+        size_hint: (1, 1)
+        allow_stretch: True
+        keep_ratio: False
+
+    MDCard:
+        size_hint: None, None
+        size: dp(350), dp(450)  # Reduced size to fit mobile screens better
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        elevation: 8
+        padding: dp(15)
+        spacing: dp(8)
+        orientation: 'vertical'
+        md_bg_color: rgba(48, 48, 48, 0.8)
+        
+        Image:
+            source: 'logo.jpg' 
+            size_hint: None, None
+            size: dp(270), dp(100)  
+            pos_hint: {'center_x': .5}
+            allow_stretch: True
+            keep_ratio: True
+
+        MDLabel:
+            id: welcome_label
+            text: "Welcome"
+            halign: 'center'
+            font_size: '18sp'  # Reduced font size for mobile
+            size_hint_y: None
+            height: self.texture_size[1] + dp(8)
+            text_color: rgba(255, 255, 255, 255)
+
+        MDTextField:
+            id: user
+            hint_text: "Username"
+            icon_right: "account"
+            size_hint_x: None
+            width: dp(280)  # Reduced width for better mobile fit
+            font_size: '14sp'  # Reduced font size for mobile
+            pos_hint: {'center_x': .5}
+            text_color: rgba(255, 255, 255, 255)
+            hint_text_color: rgba(168, 168, 168, 255)
+            icon_color: rgba(168, 168, 168, 255)
+            line_color_normal: rgba(168, 168, 168, 255)
+            line_color_focus: rgba(33, 150, 243, 255)
+
+        MDTextField:
+            id: password
+            hint_text: "Password"
+            icon_right: "eye-off"
+            size_hint_x: None
+            width: dp(280)  # Reduced width for better mobile fit
+            font_size: '14sp'  # Reduced font size for mobile
+            pos_hint: {'center_x': .5}
+            text_color: rgba(255, 255, 255, 255)
+            hint_text_color: rgba(168, 168, 168, 255)
+            icon_color: rgba(168, 168, 168, 255)
+            line_color_normal: rgba(168, 168, 168, 255)
+            line_color_focus: rgba(33, 150, 243, 255)
+            password: True
+
+        MDTextButton:
+            text: "Forgot Password"
+            pos_hint: {'center_x': .5}
+            theme_text_color: "Custom"
+            text_color: rgba(168, 168, 168, 255)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: dp(8)  # Reduced spacing for a tighter layout
+            size_hint_y: None
+            height: dp(40)  # Reduced height for mobile
+            size_hint_x: None
+            width: self.minimum_width
+            pos_hint: {'center_x': .5}
+
+            MDRoundFlatButton:
+                text: "Login"
+                on_press: 
+                    app.login()
+                md_bg_color: rgba(33, 150, 243, 255)
+                text_color: rgba(255, 255, 255, 255)
+
+            MDRoundFlatButton:
+                text: "Clear"
+                on_press: 
+                    app.clear()
+                md_bg_color: rgba(33, 150, 243, 255)
+                text_color: rgba(255, 255, 255, 255)
