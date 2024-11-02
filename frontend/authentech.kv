@@ -1,64 +1,130 @@
-# authentech.kv
-
-MainLayout:
-
-<MainLayout>:
-    orientation: 'vertical'
-
-    size_hint: 0.5, 1
-    pos_hint: {"center_x": 0.5, "top": 1}
-    spacing: 20
-
-    Button:
-        text: "𝐀𝐔𝐓𝐇𝐄𝐍𝐓𝐄𝐂𝐇    "
-        font_size: 25
-        bold: True
-        size_hint: 1, None
-        height: 80
-
-    # Original Image Display
+MDScreen:
     Image:
-        id: original_image
-        size_hint: 1, None
-        height: 200
-        source: ''  # Placeholder for image
-        
-    Button:
-        text: "Upload Original Signature"
-        size_hint: 1, None
-        height: 60
-        on_release: root.upload_original_signature()
+        source: 'bg.jpg'
+        size_hint: (1, 1)
+        allow_stretch: True
+        keep_ratio: False
 
-    # Test Image Display
-    Image:
-        id: test_image
-        size_hint: 1, None
-        height: 200
-        source: ''  # Placeholder for image
+    ScrollView:
+        do_scroll_x: False  # Only vertical scrolling
+        do_scroll_y: True
+        size_hint: (1, 1)
 
-    Button:
-        text: "Upload Test Signature"
-        size_hint: 1, None
-        height: 60
-        on_release: root.upload_test_signature()
+        BoxLayout:  # Use MainLayout as a BoxLayout for clarity
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height  # Adjust height based on content
 
-    # Progress Bar Section
-    BoxLayout:
-        orientation: 'vertical'
-        size_hint: 1, None
-        height: 60
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                size: min(dp(800), root.width - dp(32)), self.minimum_height  # Dynamic height
+                pos_hint: {"center_x": .5}
+                padding: dp(16)
+                spacing: dp(16)
+                elevation: 4
+                md_bg_color: rgba(48, 48, 48, 0.8)
 
-        Label:
-            text: "Performing analysis"
-            font_size: 16
+                Image:
+                    source: 'logo.jpg' 
+                    size_hint: None, None
+                    size: dp(270), dp(100)  
+                    pos_hint: {'center_x': .5}
+                    allow_stretch: True
+                    keep_ratio: True
 
-        ProgressBar:
-            max: 100
-            value: 0
-            size_hint: 1, None
-            height: 20
+                MDBoxLayout:
+                    orientation: 'vertical' if root.width < dp(700) else 'horizontal'
+                    spacing: dp(16)
+                    size_hint_y: None
+                    height: dp(320) if root.width >= dp(700) else dp(640)  # Adjust based on orientation
 
-    Button:
-        text: "VERIFY SIGNATURE"
-        size_hint: 1, None
-        height: 60
+                    # Original Signature Section
+                    MDCard:
+                        orientation: 'vertical'
+                        size_hint: (1, 1) if root.width < dp(700) else (0.5, 1)
+                        padding: dp(8)
+                        md_bg_color: rgba(36, 36, 36, 0.8)
+
+                        MDLabel:
+                            text: "Original Signature"
+                            halign: "center"
+                            size_hint_y: None
+                            height: dp(40)
+
+                        Image:
+                            id: original_image
+                            source: ''
+                            size_hint_y: None
+                            height: dp(200)
+
+                        Widget:
+                            size_hint_y: None
+                            height: dp(20)
+
+                        MDRaisedButton:
+                            text: "Upload Original"
+                            pos_hint: {"center_x": .5}
+                            on_release: app.upload_original_signature()  # Call app method
+
+                    # Test Signature Section
+                    MDCard:
+                        orientation: 'vertical'
+                        size_hint: (1, 1) if root.width < dp(700) else (0.5, 1)
+                        padding: dp(8)
+                        md_bg_color: rgba(36, 36, 36, 0.8)
+
+                        MDLabel:
+                            text: "Test Signature"
+                            halign: "center"
+                            size_hint_y: None
+                            height: dp(40)
+
+                        Image:
+                            id: test_image
+                            source: ''
+                            size_hint_y: None
+                            height: dp(200)
+
+                        Widget:
+                            size_hint_y: None
+                            height: dp(20)
+
+                        MDRaisedButton:
+                            text: "Upload Test"
+                            pos_hint: {"center_x": .5}
+                            on_release: app.upload_test_signature()  # Call app method
+
+                # Progress Section
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(100)
+                    padding: dp(16)
+                    md_bg_color: rgba(36, 36, 36, 0.8)
+
+                    MDLabel:
+                        text: "Performing Analysis..."
+                        halign: "center"
+                        size_hint_y: None
+                        height: dp(30)
+
+                    MDProgressBar:
+                        id: progress_bar
+                        size_hint_x: 0.8
+                        pos_hint: {"center_x": .5}
+                        type: "determinate"
+
+            MDRaisedButton:
+                id: verify_button
+                text: "VERIFY SIGNATURE"
+                pos_hint: {"center_x": .5}
+                size_hint: None, None
+                width: dp(200)
+                height: dp(50)
+                on_release: app.start_verification()  # Call app method
+                padding: dp(10), dp(16)  # Add bottom padding
+            
+            Widget:
+                size_hint_y: None
+                height: dp(20)
