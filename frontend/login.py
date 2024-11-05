@@ -17,17 +17,13 @@ class LoginApp(MDApp):
         password = self.root.ids.password.text
         
         if username == "admin" and password == "password123":
-            print('Login successful')
-            # Close the current login window
-            Window.close()
-            
+            print('Login successful')           
             
             if sys.platform == 'win32':
-                subprocess.Popen([sys.executable, 'main.py'])
-            else:
-                subprocess.Popen(['python3', 'main.py'])
-                
+                subprocess.Popen([sys.executable, 'authentech visvas/frontend/main.py'])
             sys.exit()
+            # Close the current login window
+            
         else:
             print('Invalid username or password')
     

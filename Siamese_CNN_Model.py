@@ -39,6 +39,7 @@ def Siamese_CNN():
 def create_Siamese_CNN_model():
    model=Siamese_CNN()
    initial_learning_rate = 0.00001
+   
    lr_schedule = keras.optimizers.schedules.ExponentialDecay(
       initial_learning_rate,
       decay_steps=10000,  
