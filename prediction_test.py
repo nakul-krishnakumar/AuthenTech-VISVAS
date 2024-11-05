@@ -4,11 +4,12 @@ import cv2 as cv
 import numpy as np
 
 # Load the model
-model = load_model("authentech visvas/signature_verification_model.h5")
+model = load_model("../authentech visvas/signature_verification_model.h5")
 
 # Load images
-sig1 = cv.imread("sign_data/test/049/01_049.png")
-sig2 = cv.imread("sign_data/test/049_forg/01_0114049.PNG")
+sig1 = cv.imread("../sign_data/test/049/01_049.png")
+sig2 = cv.imread("../sign_data/test/049_forg/01_0114049.PNG")
+
 
 # Preprocess images
 sig1_preprocessed = preprocessing.preprocess(sig1)  # Ensure this outputs a (height, width, channels) array
